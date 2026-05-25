@@ -36,7 +36,13 @@ const app = express();
 connect_db();
 
 /* middleware */
-app.use(cors());
+app.use(cors( cors({
+    origin: [
+      "http://localhost:5173",
+      "https://github.com/arunhari3720/crm-admin-dashboard",
+    ],
+    credentials: true,
+  })));
 app.use(express.json());
 
 /* routes */
