@@ -38,11 +38,7 @@ connect_db();
 /* middleware */
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://arunhari3720.github.io",
-    ],
-    credentials: true,
+    origin: "*",
   })
 );
 app.use(express.json());
