@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌞 LIGHT PREMIUM BASE */
+body {
+  @apply bg-slate-50 text-slate-900;
+}
+
+/* smooth font */
+* {
+  @apply antialiased;
+}
+
+/* hide scrollbar */
+/* HIDE SCROLLBAR */
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.box {
+  @apply bg-white p-6 rounded-2xl shadow space-y-3;
+}
+
+.title {
+  @apply text-lg font-bold;
+}
+
+.input {
+  @apply border p-2 w-full rounded;
+}
+
+.btn {
+  @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700;
+}
+
+.card {
+  @apply bg-white p-4 rounded-xl shadow mb-3;
+}
+
+.price {
+  @apply font-bold text-lg;
+}
+
+.dropdown {
+  @apply border p-2 rounded;
+}
+
+.actions {
+  @apply flex gap-2 mt-2;
+}
+
+.name {
+  @apply font-semibold;
+}
+
+.input {
+  @apply border p-2 w-full rounded mb-2 focus:ring-2 focus:ring-indigo-400 outline-none;
+}
+
+.btn {
+  @apply bg-indigo-600 text-white px-4 py-2 rounded;
+}
+
+.save {
+  @apply bg-green-600 text-white px-4 py-2 rounded;
+}
+
+.cancel {
+  @apply bg-gray-300 px-4 py-2 rounded;
+}
+
+.edit {
+  @apply bg-yellow-500 text-white px-3 py-1 rounded;
+}
+
+.delete {
+  @apply bg-red-600 text-white px-3 py-1 rounded;
+}
