@@ -45,5 +45,43 @@ const checkPermission = (moduleName) => {
     }
   };
 };
+const checkformpermission = (action) => {
+  return async (req, res, next) => {
+    try {
+      const role = req.user.role;
+
+      const permission = await Permission.findOne({
+        role,
+      });
+
+      if (!permission) {
+        return res.status(403).json({
+          success: false,
+          message: "No permissions assigned",
+        });
+      }
+
+      const hasAccess =
+        permission.formpermissions?.[action];
+
+      if (!hasAccess) {
+        return res.status(403).json({
+          success: false,
+          message: `No permission to ${action} forms`,
+        });
+      }
+
+      next();
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  };
+};
 
 module.exports = checkPermission;
+module.exports = checkformpermission;

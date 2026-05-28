@@ -303,7 +303,40 @@ export const getLiveAttendance = () =>
 export const getTodayAttendance = () =>
   API.get("/attendance/today");
 
+// ======================================================
+// ===== CUSTOMER FORMS =====
+// ======================================================
 
+// ✅ CREATE FORM
+export const CreateCustomerForm = (data) =>
+  API.post("/customerforms/create", data);
+
+// ✅ GET FORMS
+export const GetCustomerForms = () =>
+  API.get("/customerforms/list");
+
+// ✅ GET SINGLE FORM
+export const GetCustomerFormById = (id) =>
+  API.get(`/customerforms/${id}`);
+
+// ✅ UPDATE FORM
+export const UpdateCustomerForm = (id, data) =>
+  API.put(`/customerforms/update/${id}`, data);
+
+// ✅ DELETE FORM
+export const DeleteCustomerForm = (id) =>
+  API.delete(`/customerforms/delete/${id}`);
+
+// ✅ GET SETTINGS
+export const GetCustomerFormSettings = () =>
+  API.get("/customerform-settings");
+
+// ✅ UPDATE SETTINGS
+export const UpdateCustomerFormSettings = (data) =>
+  API.put(
+    "/customerform-settings/update",
+    data
+  );
 // ======================================================
 // 🔥 EXPORT DEFAULT API
 // ======================================================

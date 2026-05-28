@@ -36,7 +36,7 @@ const auth = async (req, res, next) => {
       "secret"
     );
 
-
+        
     // attach user
     req.user = decoded;
 

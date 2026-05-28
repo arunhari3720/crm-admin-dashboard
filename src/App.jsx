@@ -1,13 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/login";
 import MainLayout from "./layout/mainlayout";
-import ProtectedRoute from "./routes/protectedroute";
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <>
 
       <Toaster
         position="top-right"
@@ -24,27 +23,27 @@ export default function App() {
 
       <Routes>
 
-  <Route
-    path="/"
-    element={
-      <Navigate
-        to="/login"
-        replace
-      />
-    }
-  />
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to="/login"
+              replace
+            />
+          }
+        />
 
-  <Route
-    path="/login"
-    element={<Login />}
-  />
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-  <Route
-    path="/*"
-    element={<MainLayout />}
-  />
+        <Route
+          path="/*"
+          element={<MainLayout />}
+        />
 
-</Routes>
-    </BrowserRouter>
+      </Routes>
+    </>
   );
 }

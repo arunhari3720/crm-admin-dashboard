@@ -9,4 +9,5 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
   ],
   base: "/crm-admin-dashboard/",
+
 })

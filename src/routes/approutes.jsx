@@ -42,6 +42,8 @@ import CurrentPlanPage from "../pages/pricing/currentplanpage";
 import AnalyticsDashboard from "../pages/admin/analyticsdashboard";
 import Team from "../pages/team";
 import AI from "../pages/ai";
+import CustomerForm from "../pages/customerforms";
+import Permissions from "../pages/permission";
 
 //console.log("APP ROUTES LOADED");
 export default function AppRoutes({
@@ -55,7 +57,7 @@ export default function AppRoutes({
 
       {/* LOGIN */}
       <Route
-        path="/"
+        path="/login"
         element={<Login />}
       />
 
@@ -288,6 +290,8 @@ export default function AppRoutes({
         <Route path="/analytics-dashboard" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
         <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
         <Route path="/ai" element={<ProtectedRoute><AI /></ProtectedRoute>} />
+        <Route path="/customer-form" element={<ProtectedRoute><CustomerForm /></ProtectedRoute>} />
+        <Route path="/permissions" element={<ProtectedRoute><Permissions /></ProtectedRoute>} />
     </Routes>
   );
 }

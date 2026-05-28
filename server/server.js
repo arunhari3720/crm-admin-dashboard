@@ -25,7 +25,8 @@ const permissionroutes = require("./routes/permissionroutes");
 const fileroutes = require("./routes/fileroutes");
 const attendanceroutes = require("./routes/attendanceroutes");
 const leadroutes = require("./routes/leadroutes");
-
+const customerformroutes = require("./routes/customerformroutes");
+const customerformsettingroute =require("./routes/customerformsettingroutes");
 // ✅ LOAD CRON HERE (TOP LEVEL)
 require("./cron/birthday_cron");
 require("./utils/cronjob");
@@ -65,6 +66,8 @@ app.use("/api/permissions", permissionroutes);
 app.use("/api/files", fileroutes);
 app.use("/api/attendance", attendanceroutes);
 app.use("/api/leads", leadroutes);
+app.use("/api/customerforms", customerformroutes);
+app.use( "/api/customerform-settings",customerformsettingroute);
 /* server */
 app.listen(process.env.PORT, () => {
   console.log(`server running on ${process.env.PORT}`);

@@ -4,7 +4,13 @@ import {
   useNavigate,
   Navigate,
 } from "react-router-dom";
-
+import {
+ 
+  SettingOutlined,
+  SearchOutlined,
+  KeyOutlined,
+  LockFilled,
+} from "@ant-design/icons";
 import toast from "react-hot-toast";
 
 import {
@@ -16,7 +22,6 @@ import {
 } from "lucide-react";
 
 import API from "../services/api";
-
 
 export default function Login() {
 
@@ -33,40 +38,31 @@ export default function Login() {
       "role"
     );
 
-
- 
-  // =====================================
-  // STATES
-  // =====================================
-
   const [form, setForm] =
     useState({
-
       email: "",
-
       password: "",
     });
 
   const [
     showPassword,
-    setShowPassword
+    setShowPassword,
   ] = useState(false);
 
   const [loading, setLoading] =
     useState(false);
 
- // =====================================
-  // ALREADY LOGGED IN
+  // =====================================
+  // ALREADY LOGIN
   // =====================================
 
   if (
     token &&
     role &&
     window.location.pathname ===
-      "/login"
+      "#/login"
   ) {
 
-    // ADMIN
     if (role === "admin") {
 
       return (
@@ -77,7 +73,6 @@ export default function Login() {
       );
     }
 
-    // HR
     else if (
       role === "hr"
     ) {
@@ -90,7 +85,6 @@ export default function Login() {
       );
     }
 
-    // MANAGER
     else if (
       role === "manager"
     ) {
@@ -103,7 +97,6 @@ export default function Login() {
       );
     }
 
-    // USER
     else {
 
       return (
@@ -114,7 +107,6 @@ export default function Login() {
       );
     }
   }
-
 
   // =====================================
   // HANDLE CHANGE
@@ -127,10 +119,9 @@ export default function Login() {
 
     setForm({
       ...form,
-      [name]: value
+      [name]: value,
     });
   };
-
 
   // =====================================
   // LOGIN
@@ -140,10 +131,6 @@ export default function Login() {
     async () => {
 
       try {
-
-        // =====================================
-        // VALIDATION
-        // =====================================
 
         if (
           !form.email ||
@@ -157,17 +144,7 @@ export default function Login() {
 
         setLoading(true);
 
-
-        // =====================================
-        // CLEAR OLD STORAGE
-        // =====================================
-
         localStorage.clear();
-
-
-        // =====================================
-        // LOGIN API
-        // =====================================
 
         const res =
           await API.post(
@@ -175,24 +152,15 @@ export default function Login() {
             form
           );
 
+        if (
+          !res.data.user
+            ?.access_enabled
+        ) {
 
-      // =====================================
-      // ACCESS DENIED CHECK
-      // =====================================
-
-      if (
-        !res.data.user
-          ?.access_enabled
-      ) {
-
-        return toast.error(
-          "Your access has been denied by admin. Please contact admin."
-        );
-      }
-
-        // =====================================
-        // CHECK RESPONSE
-        // =====================================
+          return toast.error(
+            "Your access has been denied by admin."
+          );
+        }
 
         if (
           !res.data.success
@@ -202,11 +170,6 @@ export default function Login() {
             res.data.message
           );
         }
-
-
-        // =====================================
-        // STORE DATA
-        // =====================================
 
         localStorage.setItem(
           "token",
@@ -228,25 +191,13 @@ export default function Login() {
           res.data.user.name
         );
 
-
-        // =====================================
-        // SUCCESS MESSAGE
-        // =====================================
-
         toast.success(
           "Login successful"
         );
 
-
-        // =====================================
-        // ROLE BASED REDIRECT
-        // =====================================
-
         const userrole =
           res.data.user.role;
 
-
-        // ADMIN
         if (
           userrole === "admin"
         ) {
@@ -256,7 +207,6 @@ export default function Login() {
           );
         }
 
-        // HR
         else if (
           userrole === "hr"
         ) {
@@ -266,9 +216,9 @@ export default function Login() {
           );
         }
 
-        // MANAGER
         else if (
-          userrole === "manager"
+          userrole ===
+          "manager"
         ) {
 
           navigate(
@@ -276,7 +226,6 @@ export default function Login() {
           );
         }
 
-        // USER
         else {
 
           navigate(
@@ -286,14 +235,10 @@ export default function Login() {
 
       } catch (err) {
 
-        console.log(err);
-
         toast.error(
-
           err.response?.data
             ?.message ||
-
-          "Login failed"
+            "Login failed"
         );
 
       } finally {
@@ -302,259 +247,367 @@ export default function Login() {
       }
     };
 
-
   return (
 
     <div
       className="
         min-h-screen
+        bg-[#eef2ff]
         flex
         items-center
         justify-center
-        bg-slate-100
-        px-4
+        p-4
+        overflow-hidden
       "
     >
 
       <div
         className="
           w-full
-          max-w-md
+          max-w-[1180px]
+          min-h-[650px]
           bg-white
-          rounded-2xl
-          shadow-lg
-          p-8
+          rounded-[34px]
+          overflow-hidden
+          shadow-[0_20px_60px_rgba(0,0,0,0.08)]
+          grid
+          grid-cols-1
+          lg:grid-cols-2
         "
       >
 
         {/* ===================================== */}
-        {/* TOP SECTION */}
+        {/* LEFT SIDE */}
+        {/* ===================================== */}
+
+        <div className="hidden lg:flex flex-col bg-[#f5f8ff] relative overflow-hidden px-8 py-7 items-center justify-between">
+          {/* background shape */}
+          <div className="absolute top-0 left-0 w-72 h-72 bg-blue-100/30 rounded-br-[140px]"></div>
+
+          {/* logo */}
+        
+
+          {/* illustration wrapper */}
+          <div className="relative flex items-center justify-center w-full flex-1 z-10">
+            {/* floating icons */}
+
+            {/* key */}
+            <div className="absolute top-[62px] left-[42px] w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-yellow-400 text-xl z-20">
+              <KeyOutlined />
+            </div>
+
+            {/* settings */}
+            <div className="absolute top-[-6px] left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-blue-500 text-xl z-20">
+              <SettingOutlined />
+            </div>
+
+            {/* search */}
+            <div className="absolute top-[90px] right-[18px] w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-green-500 text-xl z-20">
+              <SearchOutlined />
+            </div>
+
+            {/* lock */}
+            <div className="absolute bottom-[55px] right-[70px] w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-yellow-500 text-xl z-20">
+              <LockFilled />
+            </div>
+            {/* illustration */}
+            <img
+              src="https://res.cloudinary.com/ddr4xqgbu/image/upload/v1779948873/Adobe_Express_-_file_fprlpc.png"
+              alt="crm illustration"
+              className="w-[400px] object-contain relative z-10"
+            />
+          </div>
+
+          {/* content */}
+          <div className="text-center z-10 mt-2">
+            
+            <p className="text-gray-500 text-sm leading-7 max-w-sm mx-auto">
+              Manage employees, customers and business operations efficiently
+              with our powerful CRM platform.
+            </p>
+          </div>
+        </div>
+        {/* ===================================== */}
+        {/* RIGHT SIDE */}
         {/* ===================================== */}
 
         <div
           className="
-            text-center
-            mb-8
+            flex
+            items-center
+            justify-center
+            px-6
+            sm:px-10
+            lg:px-16
+            py-10
+            bg-white
           "
         >
 
           <div
             className="
-              w-16
-              h-16
-              mx-auto
-              rounded-2xl
-              bg-black
-              text-white
-              flex
-              items-center
-              justify-center
-              mb-4
+              w-full
+              max-w-md
             "
           >
 
-            <ShieldCheck
-              size={30}
-            />
+            {/* MOBILE ICON */}
 
-          </div>
-
-          <h1
-            className="
-              text-3xl
-              font-bold
-              text-gray-800
-            "
-          >
-            CRM Login
-          </h1>
-
-          <p
-            className="
-              text-gray-500
-              mt-2
-            "
-          >
-            Login to continue
-          </p>
-
-        </div>
-
-
-        {/* ===================================== */}
-        {/* EMAIL */}
-        {/* ===================================== */}
-
-        <div className="mb-5">
-
-          <label
-            className="
-              text-sm
-              text-gray-600
-            "
-          >
-            Email
-          </label>
-
-          <div
-            className="
-              relative
-              mt-2
-            "
-          >
-
-            <Mail
-              size={18}
+            <div
               className="
-                absolute
-                left-4
-                top-1/2
-                -translate-y-1/2
-                text-gray-400
+                lg:hidden
+                flex
+                justify-center
+                mb-8
               "
-            />
+            >
 
-            <input
-              type="email"
+              <div
+                className="
+                  w-20
+                  h-20
+                  rounded-[24px]
+                  bg-black
+                  text-white
+                  flex
+                  items-center
+                  justify-center
+                  shadow-xl
+                "
+              >
 
-              name="email"
+                <ShieldCheck
+                  size={40}
+                />
 
-              placeholder="Enter email"
+              </div>
 
-              value={form.email}
+            </div>
 
-              onChange={
-                handlechange
-              }
+            {/* HEADING */}
 
-              className="
-                w-full
-                border
-                rounded-lg
-                pl-11
-                pr-4
-                py-3
-                outline-none
-                focus:ring-2
-                focus:ring-black
-              "
-            />
+            <div className="mb-10">
 
-          </div>
+              <h2
+                className="
+                  text-4xl
+                  font-bold
+                  text-gray-800
+                  mb-3
+                "
+              >
+                Welcome Back
+              </h2>
 
-        </div>
+              <p
+                className="
+                  text-gray-500
+                  leading-7
+                "
+              >
+                Login to continue
+                accessing your CRM
+                dashboard.
+              </p>
 
+            </div>
 
-        {/* ===================================== */}
-        {/* PASSWORD */}
-        {/* ===================================== */}
+            {/* EMAIL */}
 
-        <div className="mb-6">
+            <div className="mb-5">
 
-          <label
-            className="
-              text-sm
-              text-gray-600
-            "
-          >
-            Password
-          </label>
+              <label
+                className="
+                  text-sm
+                  font-medium
+                  text-gray-600
+                "
+              >
+                Email Address
+              </label>
 
-          <div
-            className="
-              relative
-              mt-2
-            "
-          >
+              <div
+                className="
+                  relative
+                  mt-2
+                "
+              >
 
-            <Lock
-              size={18}
-              className="
-                absolute
-                left-4
-                top-1/2
-                -translate-y-1/2
-                text-gray-400
-              "
-            />
+                <Mail
+                  size={18}
+                  className="
+                    absolute
+                    left-4
+                    top-1/2
+                    -translate-y-1/2
+                    text-gray-400
+                  "
+                />
 
-            <input
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value={form.email}
+                  onChange={
+                    handlechange
+                  }
+                  className="
+                    w-full
+                    h-14
+                    border
+                    border-gray-200
+                    rounded-2xl
+                    pl-12
+                    pr-4
+                    bg-gray-50
+                    outline-none
+                    focus:border-black
+                    focus:bg-white
+                    transition
+                  "
+                />
 
-              name="password"
+              </div>
 
-              placeholder="Enter password"
+            </div>
 
-              value={form.password}
+            {/* PASSWORD */}
 
-              onChange={
-                handlechange
-              }
+            <div className="mb-8">
 
-              onKeyDown={(e) => {
+              <label
+                className="
+                  text-sm
+                  font-medium
+                  text-gray-600
+                "
+              >
+                Password
+              </label>
 
-                if (
-                  e.key ===
-                  "Enter"
-                ) {
+              <div
+                className="
+                  relative
+                  mt-2
+                "
+              >
 
-                  handleLogin();
-                }
-              }}
+                <Lock
+                  size={18}
+                  className="
+                    absolute
+                    left-4
+                    top-1/2
+                    -translate-y-1/2
+                    text-gray-400
+                  "
+                />
 
-              className="
-                w-full
-                border
-                rounded-lg
-                pl-11
-                pr-12
-                py-3
-                outline-none
-                focus:ring-2
-                focus:ring-black
-              "
-            />
+                <input
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  name="password"
+                  placeholder="Enter password"
+                  value={form.password}
+                  onChange={
+                    handlechange
+                  }
+                  onKeyDown={(e) => {
 
-            {/* ===================================== */}
-            {/* SHOW PASSWORD */}
-            {/* ===================================== */}
+                    if (
+                      e.key ===
+                      "Enter"
+                    ) {
+
+                      handleLogin();
+                    }
+                  }}
+                  className="
+                    w-full
+                    h-14
+                    border
+                    border-gray-200
+                    rounded-2xl
+                    pl-12
+                    pr-12
+                    bg-gray-50
+                    outline-none
+                    focus:border-black
+                    focus:bg-white
+                    transition
+                  "
+                />
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword(
+                      !showPassword
+                    )
+                  }
+                  className="
+                    absolute
+                    right-4
+                    top-1/2
+                    -translate-y-1/2
+                    text-gray-500
+                  "
+                >
+
+                  {
+                    showPassword
+
+                      ? (
+                        <EyeOff
+                          size={20}
+                        />
+                      )
+
+                      : (
+                        <Eye
+                          size={20}
+                        />
+                      )
+                  }
+
+                </button>
+
+              </div>
+
+            </div>
+
+            {/* BUTTON */}
 
             <button
-              type="button"
-
-              onClick={() =>
-                setShowPassword(
-                  !showPassword
-                )
-              }
-
+              onClick={handleLogin}
+              disabled={loading}
               className="
-                absolute
-                right-4
-                top-1/2
-                -translate-y-1/2
-                text-gray-500
+                w-full
+                h-14
+                rounded-2xl
+                bg-black
+                hover:bg-gray-900
+                text-white
+                font-semibold
+                text-base
+                transition-all
+                duration-300
+                shadow-lg
+                hover:scale-[1.01]
+                active:scale-[0.99]
               "
             >
 
               {
-                showPassword
+                loading
 
-                  ? (
-                    <EyeOff
-                      size={18}
-                    />
-                  )
+                  ? "Logging in..."
 
-                  : (
-                    <Eye
-                      size={18}
-                    />
-                  )
+                  : "Login"
               }
 
             </button>
@@ -562,39 +615,6 @@ export default function Login() {
           </div>
 
         </div>
-
-
-        {/* ===================================== */}
-        {/* LOGIN BUTTON */}
-        {/* ===================================== */}
-
-        <button
-
-          onClick={handleLogin}
-
-          disabled={loading}
-
-          className="
-            w-full
-            bg-black
-            hover:bg-gray-900
-            text-white
-            py-3
-            rounded-lg
-            font-semibold
-            transition
-          "
-        >
-
-          {
-            loading
-
-              ? "Logging in..."
-
-              : "Login"
-          }
-
-        </button>
 
       </div>
 
